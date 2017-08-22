@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between down-container">
-        <button class="btn btn-primary" type="submit">
+        <button class="btn btn-primary" type="button" @click='login'>
           Log In
         </button>
         <router-link class='link' :to="{name: 'Signup'}">Create account</router-link>
@@ -25,8 +25,20 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
-    name: 'login'
+    name: 'login',
+    methods: {
+      ...mapActions([
+        'updateLoginInfo'
+      ]),
+      login: function () {
+        this.updateLoginInfo({
+          isLogin: true,
+          name: 'jack'})
+      }
+    }
   }
 </script>
 

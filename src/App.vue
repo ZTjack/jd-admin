@@ -1,12 +1,14 @@
 <template>
   <div id="app" class="app">
-    <auth-layout v-if="isAuth"></auth-layout>
-    <layout v-else></layout>
+    <layout v-if='isLogin'></layout>
+    <login v-else></login>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import Layout from 'components/layout/Layout'
+  import Login from 'components/auth/login/Login'
   import AuthLayout from './components/layout/AuthLayout'
   import VuesticPreLoader from './components/vuestic-components/vuestic-preloader/VuesticPreLoader.vue'
 
@@ -15,9 +17,13 @@
     components: {
       VuesticPreLoader,
       AuthLayout,
-      Layout
+      Layout,
+      Login
     },
     computed: {
+      ...mapGetters([
+        'isLogin'
+      ]),
       isAuth () {
         return this.$route.path.match('auth')
       }
