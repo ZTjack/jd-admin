@@ -1,42 +1,22 @@
 <template>
-  <div id="app" class="app">
-    <layout v-if='isLogin'></layout>
-    <login v-else></login>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import Layout from 'components/layout/Layout'
-  import Login from 'components/auth/login/Login'
-  import AuthLayout from './components/layout/AuthLayout'
-  import VuesticPreLoader from './components/vuestic-components/vuestic-preloader/VuesticPreLoader.vue'
-
-  export default {
-    name: 'app',
-    components: {
-      VuesticPreLoader,
-      AuthLayout,
-      Layout,
-      Login
-    },
-    computed: {
-      ...mapGetters([
-        'isLogin'
-      ]),
-      isAuth () {
-        return this.$route.path.match('auth')
-      }
-    }
-  }
+export default {
+  name: 'app'
+}
 </script>
 
+<style>
+  // Import Font Awesome Icons Set
+  $fa-font-path: "~font-awesome/fonts/";
+  @import "~font-awesome/css/font-awesome.min.css";
+  // Import Simple Line Icons Set
+  $simple-line-font-path: "~simple-line-icons/fonts/";
+  @import "~simple-line-icons/css/simple-line-icons.css";
+</style>
 <style lang="scss">
-  @import "sass/main";
-  body {
-    height: 100%;
-    .app {
-      height: 100%;
-    }
-  }
+  // Import Main styles for this application
+  @import "./scss/style";
 </style>

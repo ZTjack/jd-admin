@@ -20,18 +20,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
-    modules: [
-      resolve('src'),
-      resolve('node_modules')
-    ],
     alias: {
-      'vue$': 'vue/dist/vue.common.js',
-      'src': resolve('src'),
-      'assets': resolve('src/assets'),
-      'components': resolve('src/components'),
-      'services': resolve('src/services'),
-      'directives': resolve('src/directives'),
-      'vuex-store': resolve('src/store')
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src')
     }
   },
   module: {
@@ -39,7 +30,7 @@ module.exports = {
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
-        enforce: "pre",
+        enforce: 'pre',
         include: [resolve('src'), resolve('test')],
         options: {
           formatter: require('eslint-friendly-formatter')
@@ -57,18 +48,24 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash:7].[ext]',
+            publicPath: '../../',
+            outputPath: utils.assetsPath('img/')
+          }
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        test: /\.(woff2?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash:7].[ext]',
+            publicPath: '../../',
+            outputPath: utils.assetsPath('fonts/')
+          }
         }
       }
     ]
