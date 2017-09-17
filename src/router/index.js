@@ -28,6 +28,9 @@ import Page500 from '@/views/pages/Page500'
 import Login from '@/views/pages/Login'
 import Register from '@/views/pages/Register'
 
+// View - Account
+import Account from '@/views/account/index'
+
 Vue.use(Router)
 
 export default new Router({
@@ -55,6 +58,11 @@ export default new Router({
           path: 'widgets',
           name: 'Widgets',
           component: Widgets
+        },
+        {
+          path: 'account',
+          name: 'Account',
+          component: Account
         },
         {
           path: 'components',

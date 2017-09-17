@@ -128,6 +128,11 @@ export default {
           icon: 'icon-star'
         }
       ]
+    },
+    {
+      name: 'Account',
+      url: '/account',
+      icon: 'icon-people'
     }
   ]
 }
