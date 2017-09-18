@@ -53,33 +53,33 @@
             :horizontal="true">
             <b-form-select
               :plain="true"
-              :options="account_list"
+              :options="name_list"
               value="Please select"
-              v-model="account.name">
+              v-model="account_name">
             </b-form-select>
           </b-form-fieldset>
           <b-form-fieldset
             label="Step"
             :label-cols="3"
             :horizontal="true">
-            <b-form-input-static type="text" :value="account.step_index"></b-form-input-static>
+            <b-form-input-static type="text" :value="account.step_text"></b-form-input-static>
           </b-form-fieldset>
           <b-form-fieldset
             label="Comment"
             :label-cols="3"
             :disabled="true"
             :horizontal="true">
-            <b-form-input type="text" v-model="account.desc"></b-form-input>
+            <b-form-input type="text" v-model="comment"></b-form-input>
           </b-form-fieldset>
           <b-form-fieldset
             label="Pass Time"
             :label-cols="3"
             :disabled="true"
             :horizontal="true">
-            <b-form-input type="text" v-model="account.pass_time"></b-form-input>
+            <b-form-input type="text" v-model="pass_time" placeholder="YYYY-MM-DD"></b-form-input>
           </b-form-fieldset>
           <div slot="footer">
-            <b-button size="sm" variant="primary" @click="updateRecord"><i class="fa fa-dot-circle-o"></i> Submit
+            <b-button size="sm" variant="primary" @click="addRecord"><i class="fa fa-dot-circle-o"></i> Submit
             </b-button>
             <b-button size="sm" variant="danger" @click="resetRecordInfo"><i class="fa fa-ban"></i> Reset</b-button>
           </div>
@@ -155,6 +155,7 @@
 <script>
   import axios from 'axios'
   import toastr from 'toastr'
+  import _ from 'lodash'
   import '../../../node_modules/toastr/toastr.scss'
 
   export default {
@@ -165,14 +166,20 @@
         sex: 'male',
         tel: undefined,
         id_card: undefined,
-        account_list: ['b', 'c'],
-        account: {
-          id: undefined,
-          name: '',
-          step_text: '',
-          step_index: undefined,
-          pass_time: undefined,
-          desc: undefined
+        account_list: [],
+        name_list: [],
+        account_name: undefined,
+        pass_time: undefined,
+        comment: undefined
+      }
+    },
+    computed: {
+      account: function () {
+        let index = _.findIndex(this.account_list, {name: this.account_name})
+        if (index >= 0) {
+          return this.account_list[index]
+        } else {
+          return {}
         }
       }
     },
@@ -180,10 +187,12 @@
       get_account_list: function () {
         axios.post('/api/account/all').then((res) => {
           this.account_list = res.data.account_list
+          this.name_list = res.data.account_list.map(function (item) {
+            return item.name
+          })
+        }, function (err) {
+          toastr.error(err)
         })
-      },
-      updateRecord: function () {
-
       },
       addAccount: function () {
         if (this.name && this.tel) {
@@ -196,15 +205,38 @@
           axios.post('/api/account/add', param).then((res) => {
             if (res.data.done) {
               toastr.success(`添加${this.name}成功`)
-              this.reset()
+              this.resetAccountInfo()
             } else {
               toastr.error(`添加${this.name}失败`)
             }
           })
         }
       },
+      addRecord: function () {
+        if (this.account.id && this.comment && this.pass_time) {
+          let param = {
+            account_id: this.account.id,
+            step_index: this.account.step_index,
+            comment: this.comment,
+            pass_time: this.pass_time
+          }
+          axios.post('/api/account/addRecord', param).then((res) => {
+            if (res.data.done) {
+              toastr.success(`添加记录成功`)
+              this.resetRecordInfo()
+              this.get_account_list()
+            } else {
+              toastr.error(`添加记录成功`)
+            }
+          }, (err) => {
+            toastr.error(err)
+          })
+        }
+      },
       resetRecordInfo: function () {
-
+        this.account_name = undefined
+        this.comment = undefined
+        this.pass_time = undefined
       },
       resetAccountInfo: function () {
         this.name = undefined
@@ -215,6 +247,9 @@
     },
     mounted () {
 
+    },
+    created () {
+      this.get_account_list()
     }
   }
 </script>
