@@ -133,6 +133,11 @@ export default {
       name: 'Account',
       url: '/account',
       icon: 'icon-people'
+    },
+    {
+      name: 'AccountDashboard',
+      url: '/accountDashboard',
+      icon: 'icon-people'
     }
   ]
 }

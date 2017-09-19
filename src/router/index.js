@@ -31,6 +31,8 @@ import Register from '@/views/pages/Register'
 // View - Account
 import Account from '@/views/account/index'
 
+import AccountDashboard from '@/views/account/dashboard'
+
 Vue.use(Router)
 
 export default new Router({
@@ -63,6 +65,11 @@ export default new Router({
           path: 'account',
           name: 'Account',
           component: Account
+        },
+        {
+          path: 'accountDashboard',
+          name: 'AccountDashboard',
+          component: AccountDashboard
         },
         {
           path: 'components',
