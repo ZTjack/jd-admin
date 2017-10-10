@@ -24,7 +24,8 @@
     "vue": "2.4.2",
     "vue-chartjs": "2.8.2",
     "vue-router": "2.7.0",
-    "vue-timeago": "^3.3.6"
+    "vue-timeago": "^3.3.6",
+    "vuex": "^2.4.1"
   },
   "devDependencies": {
     "autoprefixer": "7.1.3",

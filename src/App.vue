@@ -1,11 +1,20 @@
 <template>
-  <router-view></router-view>
+  <router-view v-if="isAuth"></router-view>
+  <Login v-else></Login>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import {mapState} from 'vuex'
+  import Login from './views/pages/Login.vue'
+  export default {
+    name: 'app',
+    components: {
+      Login
+    },
+    computed: {
+      ...mapState(['isAuth'])
+    }
+  }
 </script>
 
 <style>
