@@ -54,9 +54,11 @@
     },
     methods: {
       login: function () {
-      // TODO: API
-        this.$store.commit('LOGIN', {isAuth: true})
-        this.$router.push('/')
+        // TODO: API
+        if (this.username === 'canleading.cn' && this.password === 'Canleading.cn!') {
+          this.$store.commit('LOGIN', {isAuth: true})
+          this.$router.push('/')
+        }
       }
     }
   }
