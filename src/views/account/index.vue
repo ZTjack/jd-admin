@@ -213,7 +213,7 @@
         }
       },
       addRecord: function () {
-        if (this.account.id && this.comment && this.pass_time) {
+        if (this.account.id && this.pass_time) {
           let param = {
             account_id: this.account.id,
             step_index: this.account.step_index,
@@ -234,7 +234,6 @@
         }
       },
       resetRecordInfo: function () {
-        this.account_name = undefined
         this.comment = undefined
         this.pass_time = undefined
       },
